@@ -70,11 +70,11 @@ int main()
 
         dscpTarget->u.target_size = (XT_ALIGN(sizeof(struct xt_entry_target)) + XT_ALIGN(sizeof(struct xt_mark_mtinfo1)));
         strcpy(dscpTarget->u.user.name,"MARK");
-        dscpTarget->u.user.revision = 1;
+        dscpTarget->u.user.revision = 2;
         dscpInfo = (struct xt_mark_mtinfo1 *)dscpTarget->data;
-        dscpInfo->mark =  0x1;
-        dscpInfo->mask = 0x2;
-        dscpInfo->invert = 0x3;
+        dscpInfo->mark =  1;
+        dscpInfo->mask = 2;
+        dscpInfo->invert = 1;
 
         int x = iptc_append_entry("OUTPUT", e, h);
         if (!x)
