@@ -57,7 +57,7 @@ int main()
 
         dscpTarget->u.target_size = (XT_ALIGN(sizeof(struct xt_entry_target)) + XT_ALIGN(sizeof(struct xt_mark_tginfo2)));
         strcpy(dscpTarget->u.user.name,"MARK");
-        dscpTarget->u.user.revision = 0x0;
+        dscpTarget->u.user.revision = 2;
         dscpInfo = (struct xt_mark_tginfo2 *)dscpTarget->data;
         dscpInfo->mark =  0x1;
         dscpInfo->mask = 0x0;
