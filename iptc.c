@@ -57,7 +57,7 @@ int main()
         struct xt_tcp *tcpInfo;
 
         struct xt_entry_target *dscpTarget = (struct xt_entry_target *) ((void *)e->elems + XT_ALIGN(sizeof(struct ipt_entry_match)) + XT_ALIGN(sizeof(struct xt_tcp)));
-        struct xt_mark_target_info_v1 *dscpInfo;
+        struct xt_mark_mtinfo1 *dscpInfo;
 
         matchTcp->u.match_size = XT_ALIGN(sizeof(struct ipt_entry_match)) + XT_ALIGN(sizeof(struct xt_tcp));
         strcpy(matchTcp->u.user.name, "tcp");
