@@ -64,8 +64,8 @@ int main()
         tcpInfo = (struct xt_tcp*)matchTcp->data;
         tcpInfo->spts[0] = 0x0;
         tcpInfo->spts[1] = 0xFFFF;
-        tcpInfo->dpts[0] = 1111;
-        tcpInfo->dpts[1] = 1111;
+        tcpInfo->dpts[0] = 80;
+        tcpInfo->dpts[1] = 80;
         tcpInfo->invflags = 0x0000;
 
         dscpTarget->u.target_size = (XT_ALIGN(sizeof(struct xt_entry_target)) + XT_ALIGN(sizeof(struct xt_mark_tginfo2)));
