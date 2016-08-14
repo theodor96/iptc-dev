@@ -26,7 +26,7 @@ int main()
 
         unsigned int targetOffset =  XT_ALIGN(sizeof(struct ipt_entry)) +  XT_ALIGN(sizeof(struct ipt_entry_match)) +  XT_ALIGN(sizeof(struct xt_tcp));
 
-        unsigned int totalLen = targetOffset + (XT_ALIGN(sizeof(struct xt_entry_target)) + XT_ALIGN(sizeof(struct xt_DSCP_info)));
+        unsigned int totalLen = targetOffset + (XT_ALIGN(sizeof(struct xt_entry_target)) + XT_ALIGN(sizeof(struct xt_mark_tginfo2)));
 
         e = (struct ipt_entry *)calloc(1, totalLen);
         if(e == NULL)
@@ -44,7 +44,7 @@ int main()
         struct xt_tcp *tcpInfo;
 
         struct xt_entry_target *dscpTarget = (struct xt_entry_target *) ((void *)e->elems + XT_ALIGN(sizeof(struct ipt_entry_match)) + XT_ALIGN(sizeof(struct xt_tcp)));
-        struct xt_DSCP_info *dscpInfo;
+        struct xt_mark_tginfo2 *dscpInfo;
 
         matchTcp->u.match_size = XT_ALIGN(sizeof(struct ipt_entry_match)) + XT_ALIGN(sizeof(struct xt_tcp));
         strcpy(matchTcp->u.user.name, "tcp");
@@ -55,11 +55,12 @@ int main()
         tcpInfo->dpts[1] = 1111;
         tcpInfo->invflags = 0x0000;
 
-        dscpTarget->u.target_size = (XT_ALIGN(sizeof(struct xt_entry_target)) + XT_ALIGN(sizeof(struct xt_DSCP_info)));
+        dscpTarget->u.target_size = (XT_ALIGN(sizeof(struct xt_entry_target)) + XT_ALIGN(sizeof(struct xt_mark_tginfo2)));
         strcpy(dscpTarget->u.user.name,"DSCP");
         dscpTarget->u.user.revision = 0x0;
-        dscpInfo = (struct xt_DSCP_info *)dscpTarget->data;
-        dscpInfo->dscp =  0x1A;
+        dscpInfo = (struct xt_mark_tginfo2 *)dscpTarget->data;
+        dscpInfo->mark =  0x1;
+        dscpInfo->mask = 0x0;
 
         int x = iptc_append_entry("OUTPUT", e, h);
         if (!x)
