@@ -4,11 +4,9 @@
 #include <sys/errno.h>
 #include <stdlib.h>
 #include <string.h>
-#include <libiptc/libiptc.h>
-#include <linux/netfilter/xt_mark.h>
-#include <linux/netfilter/x_tables.h>
 #include <netinet/in.h>
 #include <linux/route.h>
+#include <linux/sockios.h>
 #include <unistd.h>
 
 int setDefGateway(const char * deviceName,const char * defGateway)
