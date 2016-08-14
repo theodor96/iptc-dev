@@ -17,6 +17,19 @@
 #include <netinet/in.h>
 #include <unistd.h>
 
+enum
+{
+    XT_MARK_SET=0,
+    XT_MARK_AND,
+    XT_MARK_OR
+};
+  
+struct xt_mark_target_info_v1
+{
+    unsigned long mark;
+    __u8 mode;
+};
+
 int main()
 {
         struct ipt_entry *e = NULL;
@@ -26,7 +39,7 @@ int main()
 
         unsigned int targetOffset =  XT_ALIGN(sizeof(struct ipt_entry)) +  XT_ALIGN(sizeof(struct ipt_entry_match)) +  XT_ALIGN(sizeof(struct xt_tcp));
 
-        unsigned int totalLen = targetOffset + (XT_ALIGN(sizeof(struct xt_entry_target)) + XT_ALIGN(sizeof(struct xt_mark_tginfo2)));
+        unsigned int totalLen = targetOffset + (XT_ALIGN(sizeof(struct xt_entry_target)) + XT_ALIGN(sizeof(struct xt_mark_target_info_v1)));
 
         e = (struct ipt_entry *)calloc(1, totalLen);
         if(e == NULL)
@@ -44,7 +57,7 @@ int main()
         struct xt_tcp *tcpInfo;
 
         struct xt_entry_target *dscpTarget = (struct xt_entry_target *) ((void *)e->elems + XT_ALIGN(sizeof(struct ipt_entry_match)) + XT_ALIGN(sizeof(struct xt_tcp)));
-        struct xt_mark_tginfo2 *dscpInfo;
+        struct xt_mark_target_info_v1 *dscpInfo;
 
         matchTcp->u.match_size = XT_ALIGN(sizeof(struct ipt_entry_match)) + XT_ALIGN(sizeof(struct xt_tcp));
         strcpy(matchTcp->u.user.name, "tcp");
@@ -55,12 +68,12 @@ int main()
         tcpInfo->dpts[1] = 1111;
         tcpInfo->invflags = 0x0000;
 
-        dscpTarget->u.target_size = (XT_ALIGN(sizeof(struct xt_entry_target)) + XT_ALIGN(sizeof(struct xt_mark_tginfo2)));
+        dscpTarget->u.target_size = (XT_ALIGN(sizeof(struct xt_entry_target)) + XT_ALIGN(sizeof(struct xt_mark_target_info_v1)));
         strcpy(dscpTarget->u.user.name,"MARK");
-        dscpTarget->u.user.revision = 2;
-        dscpInfo = (struct xt_mark_tginfo2 *)dscpTarget->data;
+        dscpTarget->u.user.revision = 1;
+        dscpInfo = (struct xt_mark_target_info_v1 *)dscpTarget->data;
         dscpInfo->mark =  0x1;
-        dscpInfo->mask = 0x0;
+        dscpInfo->mode = XT_MARK_SET;
 
         int x = iptc_append_entry("OUTPUT", e, h);
         if (!x)
