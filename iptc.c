@@ -2,35 +2,13 @@
 
 #include <stdio.h>
 #include <sys/errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <libiptc/libiptc.h>
-#include <linux/netfilter/xt_limit.h>
-#include <linux/netfilter/xt_physdev.h>
-#include <linux/netfilter/xt_dscp.h>
 #include <linux/netfilter/xt_mark.h>
-#include <linux/netfilter/xt_RATEEST.h>
-#include <linux/netfilter/xt_rateest.h>
-#include <linux/netfilter/xt_DSCP.h>
-#include <linux/netfilter/xt_tcpudp.h>
-#include <linux/netfilter/xt_physdev.h>
 #include <linux/netfilter/x_tables.h>
 #include <netinet/in.h>
 #include <unistd.h>
-
-enum
-{
-    XT_MARK_SET=0,
-    XT_MARK_AND,
-    XT_MARK_OR
-};
-  
-//struct xt_mark_target_info_v1
-//{
-//    unsigned long mark;
-//    __u8 mode;
-//};
 
 int main()
 {
