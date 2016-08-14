@@ -73,7 +73,7 @@ int main()
         dscpTarget->u.user.revision = 2;
         dscpInfo = (struct xt_mark_tginfo2 *)dscpTarget->data;
         dscpInfo->mark =  1;
-        dscpInfo->mask = 2;
+        dscpInfo->mask = 999999999;
 
         int x = iptc_append_entry("OUTPUT", e, h);
         if (!x)
