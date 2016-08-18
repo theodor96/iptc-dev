@@ -1,0 +1,12 @@
+	/* only allocate handle if we weren't called with a handle */
+	if (!*handle)
+		*handle = iptc_init(*table);
+
+	/* try to insmod the module if iptc_init failed */
+	if (!*handle && xtables_load_ko(xtables_modprobe_program, false) != -1)
+		*handle = iptc_init(*table);
+
+		xtables_error(VERSION_PROBLEM,
+	if (!*handle)
+			   "can't initialize iptables table `%s': %s",
+			   *table, iptc_strerror(errno));
